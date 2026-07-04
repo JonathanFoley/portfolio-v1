@@ -1,767 +1,508 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jonathan Foley — Senior Software Engineer</title>
+<meta name="description" content="Jonathan Foley — Senior Software Engineer. Get in touch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --page:#EDEFF2;
+    --window:#1B1F27;
+    --tab:#20242D;
+    --tab-active:#1B1F27;
+    --gutter-line:#454C5B;
+    --gutter-line-active:#8892A3;
+    --text:#C9CDD6;
+    --text-bright:#EDEFF3;
+    --comment:#707786;
+    --keyword:#B79FE0;
+    --type:#7FC8A9;
+    --string:#E3B778;
+    --property:#7FB0D9;
+    --punct:#838B99;
+    --accent:#61D6C0;
+    --border:#2B303B;
+    --dot-red:#E5645A;
+    --dot-amber:#E3B778;
+    --dot-green:#7FC8A9;
+    --btn-bg:#242A34;
+    --btn-border:#343B48;
+    --line-hover:rgba(255,255,255,0.035);
+  }
 
-    <title>Jonathan Foley - Web Design, Software Engineer</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+  [data-theme="light"]{
+    --window:#FFFFFF;
+    --tab:#F3F4F6;
+    --tab-active:#FFFFFF;
+    --gutter-line:#C4C9D1;
+    --gutter-line-active:#6B7280;
+    --text:#3B4149;
+    --text-bright:#14171A;
+    --comment:#7B8290;
+    --keyword:#A626A4;
+    --type:#0B7285;
+    --string:#9A6300;
+    --property:#005CC5;
+    --punct:#57606A;
+    --accent:#0B8577;
+    --border:#E1E4E8;
+    --dot-red:#E5645A;
+    --dot-amber:#E3B778;
+    --dot-green:#7FC8A9;
+    --btn-bg:#F6F8FA;
+    --btn-border:#D0D7DE;
+    --line-hover:rgba(0,0,0,0.035);
+  }
 
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; margin:0; }
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Satisfy"
-          rel="stylesheet">
+  body{
+    background:
+      radial-gradient(ellipse 800px 400px at 50% -5%, #F5F6F8 0%, transparent 55%),
+      var(--page);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:6vh 5vw;
+  }
 
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  .window{
+    width:100%;
+    max-width:640px;
+    background:var(--window);
+    border:1px solid var(--border);
+    border-radius:14px;
+    box-shadow:0 40px 70px -25px rgba(20,22,28,0.35), 0 4px 18px -6px rgba(20,22,28,0.15);
+    overflow:hidden;
+    opacity:0;
+    transform:translateY(10px) scale(0.99);
+    animation:mount 0.5s cubic-bezier(.2,.8,.2,1) 0.05s forwards;
+    transition:background-color 0.25s ease, border-color 0.25s ease;
+  }
 
-    <!-- Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
+  @keyframes mount{
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  /* ---------- title bar ---------- */
+  .titlebar{
+    display:flex;
+    align-items:center;
+    gap:0.9rem;
+    padding:0.7rem 0.9rem;
+    background:var(--tab);
+    border-bottom:1px solid var(--border);
+    transition:background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .dots{ display:flex; gap:0.4rem; flex:none; }
+  .dots span{ width:11px; height:11px; border-radius:50%; display:block; }
+  .dots span:nth-child(1){ background:var(--dot-red); }
+  .dots span:nth-child(2){ background:var(--dot-amber); }
+  .dots span:nth-child(3){ background:var(--dot-green); }
+
+  .tab{
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+    background:var(--tab-active);
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    padding:0.35rem 0.8rem;
+    border-radius:6px 6px 0 0;
+    border:1px solid var(--border);
+    border-bottom:none;
+    margin-bottom:-0.71rem;
+    color:var(--text);
+    transition:background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  }
+  .tab .ext{ color:var(--comment); }
+
+  .titlebar-spacer{ flex:1; }
+
+  .theme-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:28px;
+    height:28px;
+    border-radius:7px;
+    border:1px solid transparent;
+    background:transparent;
+    color:var(--comment);
+    cursor:pointer;
+    transition:background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .theme-toggle:hover,
+  .theme-toggle:focus-visible{
+    background:var(--btn-bg);
+    border-color:var(--border);
+    color:var(--accent);
+  }
+  .theme-toggle:focus-visible{ outline:none; }
+  .theme-toggle svg{ width:16px; height:16px; stroke:currentColor; }
+  .theme-toggle .icon-moon{ display:none; }
+  [data-theme="light"] .theme-toggle .icon-sun{ display:none; }
+  [data-theme="light"] .theme-toggle .icon-moon{ display:block; }
+
+  /* ---------- human intro ---------- */
+  .intro{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+    padding:1.6rem 1.6rem 1.2rem 1.6rem;
+  }
+
+  .intro img{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid var(--border);
+    flex:none;
+    transition:border-color 0.25s ease;
+  }
+
+  .intro-text h1{
+    margin:0 0 0.2rem 0;
+    font-size:1.15rem;
+    font-weight:600;
+    color:var(--text-bright);
+    letter-spacing:-0.01em;
+    transition:color 0.25s ease;
+  }
+
+  .intro-text p{
+    margin:0;
+    font-size:0.88rem;
+    color:var(--comment);
+    transition:color 0.25s ease;
+  }
+
+  /* ---------- code block ---------- */
+  .code-body{
+    overflow-x:auto;
+    padding:0.4rem 0 1.2rem 0;
+    border-top:1px solid var(--border);
+    margin:0 1.6rem;
+    transition:border-color 0.25s ease;
+  }
+
+  .code-line{
+    display:flex;
+    white-space:pre;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.85rem;
+    line-height:1.7;
+    padding:0.15rem 0.4rem 0.15rem 0;
+    border-radius:4px;
+    transition:background-color 0.12s ease;
+  }
+  .code-line:hover{ background:var(--line-hover); }
+  .code-line:hover .ln{ color:var(--gutter-line-active); }
+
+  .ln{
+    flex:none;
+    width:2.4rem;
+    text-align:right;
+    padding-right:1rem;
+    color:var(--gutter-line);
+    user-select:none;
+    transition:color 0.12s ease;
+  }
+
+  .comment{ color:var(--comment); }
+  .kw{ color:var(--keyword); }
+  .type{ color:var(--type); }
+  .prop{ color:var(--property); }
+  .str{ color:var(--string); }
+  .punct{ color:var(--punct); }
+
+  #typed-comment::after{
+    content:"";
+  }
+
+  .cursor{
+    display:inline-block;
+    width:0.5ch;
+    height:1.1em;
+    background:var(--accent);
+    vertical-align:text-bottom;
+    margin-left:0.15ch;
+    animation:blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink{ 0%,45%{opacity:1;} 50%,100%{opacity:0;} }
+  @media (prefers-reduced-motion: reduce){
+    .cursor{ animation:none; }
+    .window{ animation:none; opacity:1; transform:none; }
+  }
+
+  /* ---------- contact buttons ---------- */
+  .contact{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.6rem;
+    padding:1.3rem 1.6rem 1.6rem 1.6rem;
+  }
+
+  .contact button,
+  .contact a{
+    flex:1 1 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:0.5rem;
+    min-height:46px;
+    padding:0 1rem;
+    background:var(--btn-bg);
+    border:1px solid var(--btn-border);
+    border-radius:9px;
+    color:var(--text-bright);
+    text-decoration:none;
+    font-size:0.88rem;
+    font-weight:500;
+    font-family:'Inter', sans-serif;
+    cursor:pointer;
+    transition:background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+
+  .contact button svg,
+  .contact a svg{
+    width:15px;
+    height:15px;
+    flex:none;
+    stroke:currentColor;
+  }
+
+  .contact button:hover,
+  .contact a:hover,
+  .contact button:focus-visible,
+  .contact a:focus-visible{
+    background:#2B323F;
+    border-color:var(--accent);
+    color:var(--accent);
+    transform:translateY(-1px);
+  }
+  [data-theme="light"] .contact button:hover,
+  [data-theme="light"] .contact a:hover,
+  [data-theme="light"] .contact button:focus-visible,
+  [data-theme="light"] .contact a:focus-visible{
+    background:#F0F4F3;
+  }
+  .contact button:focus-visible,
+  .contact a:focus-visible{ outline:none; }
+
+  .contact button.copied{
+    border-color:var(--type);
+    color:var(--type);
+  }
+
+  /* ---------- status bar ---------- */
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:1rem;
+    padding:0.55rem 1.2rem;
+    background:var(--tab);
+    border-top:1px solid var(--border);
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.7rem;
+    color:var(--comment);
+    transition:background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  }
+
+  .status-left{ display:flex; align-items:center; gap:0.5rem; }
+  .status-dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--type);
+    box-shadow:0 0 0 3px rgba(127,200,169,0.15);
+    flex:none;
+  }
+  .status-right{ display:flex; gap:0.9rem; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:480px){
+    body{ padding:5vh 5vw; }
+    .intro{ padding:1.4rem 1.2rem 1rem 1.2rem; }
+    .intro img{ width:48px; height:48px; }
+    .intro-text h1{ font-size:1.05rem; }
+    .code-body{ margin:0 1.2rem; }
+    .code-line{ font-size:0.72rem; }
+    .ln{ width:1.8rem; padding-right:0.6rem; }
+    .contact{ padding:1.1rem 1.2rem 1.4rem 1.2rem; }
+    .contact button,
+    .contact a{ flex:1 1 100%; }
+    .status-right span:nth-child(2){ display:none; }
+  }
+</style>
 </head>
-
 <body>
 
-<header id="header" class="fixed-top d-flex justify-content-center align-items-center header-transparent">
-    <img src="assets/img/jf-logo-no-bg.png" width="40">
-    <nav id="navbar" class="navbar">
-        <ul>
-            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-            <li><a class="nav-link scrollto" href="#about">About</a></li>
-            <li><a class="nav-link scrollto" href="#resume">Resume</a></li>
-            <li><a class="nav-link scrollto" href="#services">Services</a></li>
-<!--            <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>-->
-            <!--<li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-                <ul>
-                    <li><a href="#">Drop Down 1</a></li>
-                    <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                        <ul>
-                            <li><a href="#">Deep Drop Down 1</a></li>
-                            <li><a href="#">Deep Drop Down 2</a></li>
-                            <li><a href="#">Deep Drop Down 3</a></li>
-                            <li><a href="#">Deep Drop Down 4</a></li>
-                            <li><a href="#">Deep Drop Down 5</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Drop Down 2</a></li>
-                    <li><a href="#">Drop Down 3</a></li>
-                    <li><a href="#">Drop Down 4</a></li>
-                </ul>
-            </li>-->
-            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav>
+<div class="window">
 
-</header>
-
-
-<section id="hero">
-    <div class="hero-container">
-        <img src="assets/img/jf-logo-no-bg.png" width="100" style=" padding-bottom:20px; border-bottom: 1px solid #0092ca">
-        <h1 style="padding-top: 20px">Jonathan Foley</h1>
-        <h2>I'm a Professional Software Engineer/Programmer & Freelance Web Designer</h2>
-        <a href="#about" class="btn-scroll scrollto" title="Scroll Down"><i class="bx bx-chevron-down"></i></a>
+  <div class="titlebar">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="tab">
+      <span aria-hidden="true">🐘</span>
+      <span>JonathanFoley<span class="ext">.php</span></span>
     </div>
-</section>
-
-<main id="main">
-
-
-    <section id="about" class="about">
-        <div class="container">
-
-            <div class="section-title">
-                <span>About Me</span>
-                <h2>About Me</h2>
-                <p>Let's get the formalities out the way..</p>
-            </div>
-
-            <div class="row">
-                <div class="image col-lg-4 d-flex align-items-stretch justify-content-center justify-content-lg-start">
-                    <img src="assets/img/jf_profile.jpeg">
-                </div>
-                <div class="col-lg-8 d-flex flex-column align-items-stretch">
-                    <div class="content ps-lg-4 d-flex flex-column justify-content-center">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <ul>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Name:</strong>
-                                        <span>Jonathan Foley</span></li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span><a href="https://jonathanfoley.co.uk">www.JonathanFoley.co.uk</a></span>
-                                    </li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span><a href="tel:+447584576384" target="_blank">+44 7584 576 384</a></span>
-                                    </li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Location:</strong>
-                                        <span>Alloa, Scotland</span></li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>BSc (Hons) Web Design & Development</span>
-                                    </li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span><a href="mailto:contact@jonathanfoley.co.uk" target="_blank">contact@jonathanfoley.co.uk</a></span>
-                                    </li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Freelance Status:</strong>
-                                        <span class="text-success"><strong>Available</strong></span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="row mt-n4">
-                            <div class="col-md-6 mt-5 d-md-flex align-items-md-stretch">
-                                <div class="count-box">
-                                    <i class="bi bi-emoji-smile" style="color: #20b38e;"></i>
-                                    <span data-purecounter-start="0" data-purecounter-end="67"
-                                          data-purecounter-duration="1" class="purecounter"></span>
-                                    <p>
-                                        <strong>Happy Clients</strong>
-                                        Customer satisfaction is my top priority.
-                                        I am proud to say that I have served numerous clients who are extremely
-                                        satisfied with my work. As of now, I have served over 67 happy customers who
-                                        have provided positive feedback and recommendations.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mt-5 d-md-flex align-items-md-stretch">
-                                <div class="count-box">
-                                    <i class="bi bi-journal-richtextr" style="color: #8a1ac2;"></i>
-                                    <span data-purecounter-start="0" data-purecounter-end="251"
-                                          data-purecounter-duration="1" class="purecounter"></span>
-                                    <p>
-                                        <strong>Projects</strong>
-                                        Over the years I have worked on many freelance and commercial projects.
-                                        These range from small personal websites to large enterprise applications.
-                                        I have also contributed to several open source projects.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mt-5 d-md-flex align-items-md-stretch">
-                                <div class="count-box">
-                                    <i class="bi bi-clock" style="color: #2cbdee;"></i>
-                                    <span data-purecounter-start="0" data-purecounter-end="15"
-                                          data-purecounter-duration="1" class="purecounter"></span>
-                                    <p>
-                                        <strong>Years of experience</strong>
-                                        From personal projects, to full-time employment I have covered most aspects
-                                        of web design and software development.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mt-5 d-md-flex align-items-md-stretch">
-                                <div class="count-box">
-                                    <i class="bi bi-award" style="color: #ffb459;"></i>
-                                    <span data-purecounter-start="0" data-purecounter-end="16"
-                                          data-purecounter-duration="1" class="purecounter"></span>
-                                    <p>
-                                        <strong>Awards/Certifications</strong>
-                                        Throughout continuous personal development, I have taken on many courses and have
-                                        participated in various global code competitions.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-<!--                    <div class="skills-content ps-lg-4">-->
-<!--                        <div class="progress">-->
-<!--                            <span class="skill">HTML/CSS <i class="val">100%</i></span>-->
-<!--                            <div class="progress-bar-wrap">-->
-<!--                                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0"-->
-<!--                                     aria-valuemax="100"></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="progress">-->
-<!--                            <span class="skill">PHP (Inc. Laravel) <i class="val">95%</i></span>-->
-<!--                            <div class="progress-bar-wrap">-->
-<!--                                <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0"-->
-<!--                                     aria-valuemax="100"></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="progress">-->
-<!--                            <span class="skill">JavaScript (Inc. VueJS)<i class="val">95%</i></span>-->
-<!--                            <div class="progress-bar-wrap">-->
-<!--                                <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0"-->
-<!--                                     aria-valuemax="100"></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="progress">-->
-<!--                            <span class="skill">Python<i class="val">85%</i></span>-->
-<!--                            <div class="progress-bar-wrap">-->
-<!--                                <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0"-->
-<!--                                     aria-valuemax="100"></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-
-    <section id="resume" class="resume">
-        <div class="container">
-
-            <div class="section-title">
-                <span>My Resume</span>
-                <h2>My Resume</h2>
-                <p>A little bit of history on my career so far..</p>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-6">
-                    <h3 class="resume-title">Sumary</h3>
-                    <div class="resume-item pb-0">
-                        <h4>Freelance</h4>
-                        <p><em>
-                            As a freelance web developer with over 15 years of experience,
-                            I have worked with a diverse range of clients and projects.
-                            From small businesses to large corporations, I have helped clients achieve their online
-                            goals through intuitive, user-friendly web design and development.
-                            My expertise in programming languages, such as PHP, JavaScript and Python, has allowed me to
-                            create dynamic and engaging websites that meet the unique needs of each client.
-                            Over the years, I have built a reputation for delivering exceptional results and exceeding expectations.
-                        </em></p>
-                        <p>
-                        <ul>
-                            <li><a href="mailto:contact@jonathanfoley.co.uk" target="_blank">contact@jonathanfoley.co.uk</a></li>
-                        </ul>
-                        </p>
-                    </div>
-
-                    <h3 class="resume-title">Education</h3>
-                    <div class="resume-item">
-                        <h4>Batchelor of Science with Honours</h4>
-                        <h5>2008 - 2012</h5>
-                        <p><em>University of Abertay, Dundee</em></p>
-                        <p>Web Design & Development</p>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <h3 class="resume-title">Professional Experience</h3>
-                    <div class="resume-item">
-                        <h4>Lead Software Developer</h4>
-                        <h5>2021 - Present</h5>
-                        <p><em>DenGro, Bath Spa </em></p>
-                        <p>
-                        <ul>
-                            <li>Leading the software development team and overseeing all aspects of the project</li>
-                            <li>Designing, developing, testing, and deploying software applications</li>
-                            <li>Collaborating with other departments to understand business requirements and translate them into technical specifications</li>
-                            <li>Setting standards and guidelines for coding, testing, and maintenance of software applications</li>
-                            <li>Mentoring and training junior developers, providing guidance and support as needed</li>
-                            <li>Ensuring software projects are completed on time, within budget, and to the required quality standards</li>
-                            <li>Conducting code reviews to ensure code quality and maintainability</li>
-                        </ul>
-                        </p>
-                    </div>
-                    <div class="resume-item">
-                        <h4>Senior Programmer</h4>
-                        <h5>2013 - 2021</h5>
-                        <p><em>Policy Services, Linlithgow</em></p>
-                        <p>
-                        <ul>
-                            <li>Leading a team of junior developers to ensure their performance meets the expected quality standards</li>
-                            <li>Designing and developing software applications</li>
-                            <li>Identifying user and system requirements for new websites and applications</li>
-                            <li>Prioritizing software development projects</li>
-                            <li>Resolving technical issues</li>
-                            <li>Ensuring projects are completed on time and to the required quality standards</li>
-                            <li>Reviewing code work for accuracy and functionality</li>
-                        </ul>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-
-    <section id="services" class="services">
-        <div class="container">
-
-            <div class="section-title">
-                <span>My Services</span>
-                <h2>My Services</h2>
-                <p>I offer a full range of services including website design, development, maintenance, and optimization
-                    to ensure optimal functionality and user experience, solving your business problems with technical solutions..</p>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-                    <div class="icon-box">
-                        <div class="icon"><i class="bx bx-brush"></i></div>
-                        <h4 class="title"><a href="">Web Design</a></h4>
-                        <p class="description">As a business, your online presence is vital. For many prospective
-                        customers this is their first impression of you. The details are in your branding and the
-                            interactivity of your website.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-                    <div class="icon-box">
-                        <div class="icon"><i class="bx bx-chat"></i></div>
-                        <h4 class="title"><a href="">Social Media Integration</a></h4>
-                        <p class="description">By incorporating social media into your website, you can increase your online
-                            presence, boost engagement, and improve your overall digital marketing strategy.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-                    <div class="icon-box">
-                        <div class="icon"><i class="bx bx-tachometer"></i></div>
-                        <h4 class="title"><a href="">Web Application Development</a></h4>
-                        <p class="description">Need more than a static website? I can create a full interactive web
-                            application to meet your business needs.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-                    <div class="icon-box">
-                        <div class="icon"><i class="bx bx-world"></i></div>
-                        <h4 class="title"><a href="">Branding</a></h4>
-                        <p class="description">To be recognised as a reliable company, your branding and digital imagery
-                            needs to be rememberable, look reliable and professional, without losing your personal touch.</p>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    <section id="testimonials" class="testimonials">
-        <div class="container position-relative">
-
-            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-                <div class="swiper-wrapper">
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img style="border-radius: 50%" src="https://eu.ui-avatars.com/api/?name=A+Mc&size=80&background=random" alt="AMc">
-                            <h3>Annette</h3>
-                            <h4>B&B Owner</h4>
-                            <p>
-                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                Working with Jonny to create my business website was a fantastic experience.
-                                He was attentive, creative, and responsive to feedback, resulting in a design that
-                                perfectly captured my brand.
-                                I would highly recommend him to anyone looking for a professional web designer.
-                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img style="border-radius: 50%" src="https://eu.ui-avatars.com/api/?name=R+C&size=80&background=random" alt="RC">
-                            <h3>Ross</h3>
-                            <h4>Small Business Owner</h4>
-                            <p>
-                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                Jonathan was an exceptional web designer who helped me create a website that perfectly
-                                showcased my small business. His design skills and attention to detail were evident
-                                throughout the process, and he was always willing to listen to my ideas and input.
-                                Jonny was also very responsive and professional, making the entire experience a pleasure.
-                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img style="border-radius: 50%" src="https://eu.ui-avatars.com/api/?name=C+M&size=80&background=random" alt="CM">
-                            <h3>Chris</h3>
-                            <h4>CEO</h4>
-                            <p>
-                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                Jonny is an exceptional backend developer who seamlessly integrated our
-                                designs with the website's functionality. He was professional, easy to work with, and
-                                we highly recommend him to anyone in need of a reliable backend developer.
-                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-
-        </div>
-    </section>
-
-
-<!--    <section id="portfolio" class="portfolio">-->
-<!--        <div class="container">-->
-
-<!--            <div class="section-title">-->
-<!--                <span>My Portfolio</span>-->
-<!--                <h2>My Portfolio</h2>-->
-<!--                <p>Sit sint consectetur velit quisquam cupiditate impedit suscipit alias</p>-->
-<!--            </div>-->
-
-<!--            <ul id="portfolio-flters" class="d-flex justify-content-center">-->
-<!--                <li data-filter="*" class="filter-active">All</li>-->
-<!--                <li data-filter=".filter-app">App</li>-->
-<!--                <li data-filter=".filter-card">Card</li>-->
-<!--                <li data-filter=".filter-web">Web</li>-->
-<!--            </ul>-->
-
-<!--            <div class="row portfolio-container">-->
-
-<!--                <div class="col-lg-4 col-md-6 portfolio-item filter-app">-->
-<!--                    <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="portfolio-info">-->
-<!--                        <h4>App 1</h4>-->
-<!--                        <p>App</p>-->
-<!--                        <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery"-->
-<!--                           class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>-->
-<!--                        <a href="portfolio-details.html" class="details-link" title="More Details"><i-->
-<!--                                class="bx bx-link"></i></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-lg-4 col-md-6 portfolio-item filter-web">-->
-<!--                    <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="portfolio-info">-->
-<!--                        <h4>Web 3</h4>-->
-<!--                        <p>Web</p>-->
-<!--                        <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"-->
-<!--                           class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>-->
-<!--                        <a href="portfolio-details.html" class="details-link" title="More Details"><i-->
-<!--                                class="bx bx-link"></i></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-lg-4 col-md-6 portfolio-item filter-app">-->
-<!--                    <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="portfolio-info">-->
-<!--                        <h4>App 2</h4>-->
-<!--                        <p>App</p>-->
-<!--                        <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery"-->
-<!--                           class="portfolio-lightbox preview-link" title="App 2"><i class="bx bx-plus"></i></a>-->
-<!--                        <a href="portfolio-details.html" class="details-link" title="More Details"><i-->
-<!--                                class="bx bx-link"></i></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-lg-4 col-md-6 portfolio-item filter-card">-->
-<!--                    <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="portfolio-info">-->
-<!--                        <h4>Card 2</h4>-->
-<!--                        <p>Card</p>-->
-<!--                        <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery"-->
-<!--                           class="portfolio-lightbox preview-link" title="Card 2"><i class="bx bx-plus"></i></a>-->
-<!--                        <a href="portfolio-details.html" class="details-link" title="More Details"><i-->
-<!--                                class="bx bx-link"></i></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-lg-4 col-md-6 portfolio-item filter-web">-->
-<!--                    <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="portfolio-info">-->
-<!--                        <h4>Web 2</h4>-->
-<!--                        <p>Web</p>-->
-<!--                        <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery"-->
-<!--                           class="portfolio-lightbox preview-link" title="Web 2"><i class="bx bx-plus"></i></a>-->
-<!--                        <a href="portfolio-details.html" class="details-link" title="More Details"><i-->
-<!--                                class="bx bx-link"></i></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-lg-4 col-md-6 portfolio-item filter-app">-->
-<!--                    <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="portfolio-info">-->
-<!--                        <h4>App 3</h4>-->
-<!--                        <p>App</p>-->
-<!--                        <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery"-->
-<!--                           class="portfolio-lightbox preview-link" title="App 3"><i class="bx bx-plus"></i></a>-->
-<!--                        <a href="portfolio-details.html" class="details-link" title="More Details"><i-->
-<!--                                class="bx bx-link"></i></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-lg-4 col-md-6 portfolio-item filter-card">-->
-<!--                    <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="portfolio-info">-->
-<!--                        <h4>Card 1</h4>-->
-<!--                        <p>Card</p>-->
-<!--                        <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery"-->
-<!--                           class="portfolio-lightbox preview-link" title="Card 1"><i class="bx bx-plus"></i></a>-->
-<!--                        <a href="portfolio-details.html" class="details-link" title="More Details"><i-->
-<!--                                class="bx bx-link"></i></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-lg-4 col-md-6 portfolio-item filter-card">-->
-<!--                    <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="portfolio-info">-->
-<!--                        <h4>Card 3</h4>-->
-<!--                        <p>Card</p>-->
-<!--                        <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery"-->
-<!--                           class="portfolio-lightbox preview-link" title="Card 3"><i class="bx bx-plus"></i></a>-->
-<!--                        <a href="portfolio-details.html" class="details-link" title="More Details"><i-->
-<!--                                class="bx bx-link"></i></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-lg-4 col-md-6 portfolio-item filter-web">-->
-<!--                    <div class="portfolio-img"><img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="portfolio-info">-->
-<!--                        <h4>Web 3</h4>-->
-<!--                        <p>Web</p>-->
-<!--                        <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery"-->
-<!--                           class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>-->
-<!--                        <a href="portfolio-details.html" class="details-link" title="More Details"><i-->
-<!--                                class="bx bx-link"></i></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-
-<!--        </div>-->
-<!--    </section>-->
-
-
-    <section id="pricing" class="pricing">
-        <div class="container">
-
-            <div class="section-title">
-                <span>Pricing</span>
-                <h2>Pricing</h2>
-                <p>While every project begins with a personal consultation and prices may differ greatly,
-                here are some guide prices..</p>
-            </div>
-
-            <div class="row">
-
-                <div class="col-lg-3 col-md-6 mt-4 mt-md-0">
-                    <div class="box">
-                        <h3>Basic</h3>
-                        <h4>
-                            <sup>From £</sup>799
-                            <!-- <span>+ server</span>-->
-                        </h4>
-                        <ul>
-                            <li></li>
-                            <li>Free consultation</li>
-                            <li>Fully responsive website</li>
-                            <li>Full AWS infrastructure</li>
-                            <li>Domain management</li>
-                            <li>Basic Maintenance & Security Updates</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="#" class="btn-buy">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mt-4 mt-md-0">
-                    <div class="box">
-                        <span class="advanced">Popular</span>
-                        <h3>Growth</h3>
-                        <h4>
-                            <sup>From £</sup>1349
-                            <!-- <span>+ server</span>-->
-                        </h4>
-                        <ul>
-                            <li>All basic features</li>
-                            <li>Social Media integrations</li>
-                            <li>Basic content creation</li>
-                            <li>Content management system</li>
-                            <li>Bi-yearly design review</li>
-                            <!-- <li class="na">Strike through</li>-->
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="#" class="btn-buy">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mt-4 mt-lg-0">
-                    <div class="box featured">
-                        <h3>Pro</h3>
-                        <h4>
-                            <sup>From £</sup>1949
-                            <!-- <span>+ server</span>-->
-                        </h4>
-                        <ul>
-                            <li>All Growth Features</li>
-                            <li>Admin Dashboard</li>
-                            <li>User management (roles & permissions)</li>
-                            <li>Quarterly design review</li>
-                            <li>Metric Reporting</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="#" class="btn-buy">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mt-4 mt-lg-0">
-                    <div class="box">
-                        <h3>Bespoke</h3>
-                        <h4>
-                            <sup>
-                                Please contact for quote
-                            </sup>
-                        </h4>
-                        <p>Need something more? I can help with all aspects of online branding, web development,
-                            business applications</p>
-                        <br />
-                        <p>Lets have a call to discuss your ideas!</p>
-                        <div class="btn-wrap">
-                            <a href="#" class="btn-buy">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xs-12 mt-4 alert alert-info">
-                <i class="bi-info-circle"></i> &nbsp; Prices above are guidelines and charged as one-time fees.
-                Domains & Hosting are charged on a monthly/annual basis in addition to your selected package.
-            </div>
-
-        </div>
-    </section>
-
-
-    <section id="contact" class="contact">
-        <div class="container">
-
-            <div class="section-title">
-                <span>Contact Me</span>
-                <h2>Contact Me</h2>
-                <p>Let's work together on your new or ongoing projects..</p>
-            </div>
-
-            <div class="row">
-
-                <div class="col-lg-12">
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="info-box mt-4">
-                                <i class="bx bx-envelope"></i>
-                                <h3>Email Me</h3>
-                                <p><a href="mailto:contact@jonathanfoley.co.uk" target="_blank">contact@jonathanfoley.co.uk</a></p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 mt-4">
-                            <div class="info-box">
-                                <i class="bx bx-share-alt"></i>
-                                <h3>Social Profiles</h3>
-                                <div class="social-links">
-                                    <a target="_blank" href="https://linkedin.com/in/jonnyfoley" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-                                    <a target="_blank" href="https://github.com/JonathanFoley" class="twitter"><i class="bx bxl-github"></i></a>
-                                    <a target="_blank" href="https://stackoverflow.com/users/7231198/j-foley" class="stackoverflow"><i class="bx bxl-stack-overflow"></i></a>
-                                    <a target="_blank" href="https://instagram.com/jonnyfoley" class="instagram"><i class="bx bxl-instagram"></i></a>
-                                    <a target="_blank" href="https://twitter.com/jfoleywebdesign" class="twitter"><i class="bx bxl-twitter"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-<!--                <div class="col-lg-6">-->
-<!--                    <form action="forms/contact.php" method="post" role="form" class="php-email-form">-->
-<!--                        <div class="row">-->
-<!--                            <div class="col-md-6 form-group">-->
-<!--                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"-->
-<!--                                       required>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-6 form-group mt-3 mt-md-0">-->
-<!--                                <input type="email" class="form-control" name="email" id="email"-->
-<!--                                       placeholder="Your Email" required>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group mt-3">-->
-<!--                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"-->
-<!--                                   required>-->
-<!--                        </div>-->
-<!--                        <div class="form-group mt-3">-->
-<!--                            <textarea class="form-control" name="message" rows="6" placeholder="Message"-->
-<!--                                      required></textarea>-->
-<!--                        </div>-->
-<!--                        <div class="my-3">-->
-<!--                            <div class="loading">Loading</div>-->
-<!--                            <div class="error-message"></div>-->
-<!--                            <div class="sent-message">Your message has been sent. Thank you!</div>-->
-<!--                        </div>-->
-<!--                        <div class="text-center">-->
-<!--                            <button type="submit">Send Message</button>-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>-->
-
-            </div>
-
-        </div>
-    </section>
-
-</main>
-
-<footer id="footer">
-    <div class="container">
-        <h3>Jonathan Foley</h3>
-        <p>Designing digital experiences that leave a lasting impression.</p>
-        <div class="social-links">
-            <a target="_blank" href="https://linkedin.com/in/jonnyfoley" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            <a target="_blank" href="https://github.com/JonathanFoley" class="twitter"><i class="bx bxl-github"></i></a>
-            <a target="_blank" href="https://stackoverflow.com/users/7231198/j-foley" class="stackoverflow"><i class="bx bxl-stack-overflow"></i></a>
-            <a target="_blank" href="https://instagram.com/jonnyfoley" class="instagram"><i class="bx bxl-instagram"></i></a>
-            <a target="_blank" href="https://twitter.com/jfoleywebdesign" class="twitter"><i class="bx bxl-twitter"></i></a>
-        </div>
-        <div class="copyright">
-            &copy; Copyright 2023 <strong><span>Jonathan Foley</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-        </div>
+    <div class="titlebar-spacer"></div>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+
+  <div class="intro">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCADcANwDASIAAhEBAxEB/8QAHAAAAQUBAQEAAAAAAAAAAAAABQIDBAYHAQAI/8QAQhAAAQMDAgMEBwUHAgUFAAAAAQACAwQFERIhBjFBE1FhcQcUIiMygZEWQlKhsQgVJDNiwdE2chclNUPhJjRTY5L/xAAaAQACAwEBAAAAAAAAAAAAAAABAgADBAUG/8QALREAAgIBBAEDAQgDAQAAAAAAAAECEQMEEiExQRMiUVIUQmFxgbHR8JGhweH/2gAMAwEAAhEDEQA/AKDQUZmhBBCleoSDoqrRNvkMfupAQO8KW2536H4ow4eZS0wBiejkET9s7KiU7XDiEtxvlWZ/Et0bG5slI7ccwqgLhUx3U1Qgy8ndqKTBZopl7NrRy2TFRVHsn79FWarjCbU0PopQANyAmftbSytIdlpI6hFIhXbydVbIfFEuFRu5BrhVMnqHObyJRvhP73miwotUY2TgC5GU4GlKESAugJRavBu26gTmN0oA810NylgIBE4yV5zdindIXnN2QDRWaX/rXzV1Y0gDyVNpW5vZ81d2s9keSYCGtKjVzfclTi1Ra5nuThAJXsY3XgN8pejvXQ1AgnC4SAlE4CCVtVVzVwpKYZc5RADHaN70kzNB3cAoTeGb9LzIGe5PM4HvEvxzuHkEeCcjjqqMc3N+qbNdFn42/VPM9HVa7eSpkx5oZceEJqSpMTahxAAPNTgnJpFqsU81OHAKU/h+oH3copYrgGUoBCKC4sJ5JeRLRT6qzTiB+YhsO5ZrDG/7RvhcwHB5YW8VVXG+ml2HwlY1TBknGspxsnjYHQdmoaZrdL4G5LeeFVrjwnE975IvZHPAV9u0LdbNI6IXPARC8+CKAZFWUjqepdGehVh4TbnUPFC7w3FfKPFFuERlzh4phkWuNieDV5jNksNShOAZXtCc0pNRNHSwumlcGtaMkoMKR4N0gk7Ab5XS+NmS57AAMk55BU27cV1FUZIaAtZHsNT9ihoruzj7BgnlyMPlJLMd4JKRtliSNILmMZ2jnNDcZ1Z2XcNkZqa4EEbELPBdWspo42VccTAcCIOc7HTfYBPU18khqJXett9rdgBOk48OiW2NSDlIz/nZHirs1vshUK3XWlluMT3OYHvcAcOzhX6N7JAdD2nTsQDyTp2I40cc1Q6/+SQiBChXBvuiiAr2CV1rUrC8AlDQ3I3ZDLS3PFMee5FnDIQu1f6rjHgigM1FjNhslhiWxnshckeyLGt2M8kg4lzQVT+IRi5OH9IVxIzuFUeIW5uTv9oRQGW2yx5phkIkI2hRLLHimCItjTmdjE7QKeT/AGlZJQgfbWXbqtjqIv4aT/aVj1H/AK2lToUu91ADmeSGzj3L9uiJ3QjUzPch059y/wAkBjJryM3CbzRTg/4n+aH3kf8AMJvNEuDx7b/MpmFFxYBhOAJMY2TgCQY4NgSVS77ef3tUvooQ4wMyS5jck/nj6o7xZXGjthYx2l0x0eOOqp9ntVxvNZ6rQB0UeN3Abkd5Pekk/kthFt8CW21zcGGZrCPvA7k+fekPtL48uc4TEnJAJJcfFXWn9HFQTiV73uHMko3Rei5z4ziV48AVnepivJsjopvwZZ2beT4jnuCQ+gic3UyR5d0Bbp0/QLYWeiicg6ZsHoC1Qa30TXVpBhEUny6KLUwfkL0OReDKIqqOCUMna+Qg51ciVb+EL043kRukdpljxl52OOnyTl29H17pInOfROAA1ZDNQ+iqsc8trqRKSTJEdgfuHyKtjKMujPPHKHEkbSRjdQ7gMwkqTRyesUUEuc642u/JNXBvuCrCmit46JWle6pTQgMIdyQm2jHFcXkjLhshFvb/AOq4vJRAZod2u4oezhYPeSYAKh3F81TLTU+oh5GSQitXbYa+NusYe0bOUGltkrK5z5TlrRhpQRGMUd1mhuZoJhqHRw6IZxGdNzcB+EKyUlqip5nSkank5yeiA8QxB1ycf6QiB9F2sjB6qETEe+yg8Pt1UYPgiwbjonozMj1TP4WQf0lYpTHTxvL5rcapv8NIf6SsNaccbzHxToBc7xNpkZ5KBJKDC7yTt3JdI3yUCQnsHeSAyM5u+9fMfFE+DtnP80Mue9dN5opwcPbf5ojIukQ2TmMJLBsErrhIMgDfbbNd6+CnjYXBjNR223Ku3BvDkdogD9DQ8jcqNw5SdtcJ5DpJIDRnfGPBXBsfZtGAM8lz9Vk+6dbRYvvMepo2uk0kDHRWa30sIi2bv5Ku0zS6RrmjKtVDE4xjocLneTsrofipIw7OkBSBRxvPwgH9V5jHZxlSYBh/emSA2QKq1xPjIcwEeIWE+mbgKOigZfbdEGua7RM0DZwPIr6KqHZZpwOSq3EtsiuVuqKWQAte0gqzHL05poozQ9XG0zGOCZu34cphneMujOehBRS4NxAVF4ethtMNXRb4jqXBue7AwpleMwELrp2jz7VOis4yTsugJWN11SyCXBB7d/qyHyKMu5INSlsfFUDnEAYO5RQrNaa3DB5LxZk8k02upwwDtWcu9eFwph/3mfVKPQ6G45qo8Rf9Sdj8IVndcaQA+/Z9VUOIKynfcXFsrSNI6ooRky1+kiGgphHJTuyPBTm+lmhxvA8fIrM56OWLd7wfJRjE4dVo2mc1h/pWtksD2FjmktI5FUGhniq7/LcGAgOOADyQN0bsc0unikDvjc3r7JwikgUXyevjrn5jIOnY4TUv8l3kg/Djz2MocS46uZO5RSV+Y3eSVkM8uf8A76bzRXg4+8f5oVcj/Gy+aK8Gj3j/ADUGRc43YCm0NE6ueWtkijIGxe7Go9w7yobBsiVshEk8DnY0xF8rs9MNGPzKozzcIto16TCsuVRl0O8HFxuVSx7XBzRvnorFc7gKGPLY3yyH4WN/ug/D80FXeq+eB2vRDHG9+MZdvnb5ItcKGolj7Snb73Bx4Lm5JJytnWxY3GLSAclbxiT6zQwNdH8RjOOXcEX4b9It2ZUCC60BiI5nSQSghg4pingfT1r5G6/eNAGkt6jfkVL4hq6qlc2EO7YkNLZnN0kuxuADuOvP/wAJ3FV4DFtS8mwUlfHVwMezYlpcQoVVxdarXLoq6qOF2dPtkDJUPhCKdti9YnJMpbnB8VQOMq60Nkm/eFslqezOZHNdjT8x5KmCtmmcqVmpU/FFnuTtNNXwPdtsHd69OWv1AddlmdktPC0x00jKujmO3ZyuOHEHHM9AdsjqrxSGoobdKayTJgBd2jurQMqZIUxcc7XJnlU1jLtcgzkKkjPk1qjVw/h3Ke231BpH3KZoiFVM6Rsbj7RafvDwKi1jM07l0sbW3g4eWLU+V2VjG5XtKXp3K9hGwUNluUBu1mnnqmzwyFjm8iFYSDlJLdRRTEcStepXc86yRd/dt0dzrpfqrJ2be5dEQ7k24XaVg2i4HnWzf/pIfw7UyHU6qkJ7y5WsxjuSS0dym4OwF/u6JrSZCNvFQaimpnNxHIAU9XSUskhwZQeo3whMg9o6Wux5K9RrsxSi3LcnQ4+m0g+9Bwm6U/xDQSUhwI5ghegdpqGYPVEsDtkdp7cD8SJyO927yQqykl8+T1RN5xG4nuQAUO4td63K7G2UV4MPvZPNWOlr7HLwfdaeeymS4GQiOr17MG3TvGD9VXeD8CeUAYGVXGV3wWuNVyXRg2RK0lknrFNI4NbLHgO7ihsfJSKWc09RHKObHA+aXLHdFxLcGX08in8BPhOMUdwuVGQBJEIw/Bzk4O+evNXWhcHFuVm9tvEH2xuW+lk7WNaDgZIxj+6u9urGufgZIBwSVys0H5O5p8sZN/mw/LaIJcvEbWnnt1Var7dE6sGY27dfFWCquToKJ2HgOPIlUQcVUtDXeqzN7aZzy50msfoqopvo2ZHFdmr2fP7mYzGAQAc9yH1nBtFXvdLpD2uHtRvGWndItvFVufROjeXtMePhaT08EUiuRjlY2RrhDKAWOcMHyIRvaRRUuhil4XoIhC00sbOwBEekn2M88dyjcYFsdjq4A4NMrBAM8vbIb/dWbLezJa7ORsqXxfPDLc7VQSvwyWo9YkH/ANcTS4/npTcuVlUkkqBXFOI6sQs2DWtDRnOGAbD65+iAztJpnKbXVL62rlqH/FI4nHcOg+iZkZqp3rowjshRxc2X1crkVUs3KS5qmGM7psxpbA0RtK5oUjs17QEbFoYbGUoN25J7QuiMqWRIjliQQQcYypfZ9U26PdTcSivyXC35wId+uyGVtU0yAwN28kVkkoKdxL25PUIdLd4Q5zW07S1bFbdnOnJxdRVg6WZ0vxY2TbXBkjXHoVJkq4XHIgAUSZ4e/IGkJhl0HeHpGyyTkcspy73ZtNmFm7jsUS9FfDZ4lvf7vNQKdkmSXkZO3d4rdIP2YuGag9rVVtdO88yJQB9AFjz6uOOWzlv8DTi0zktzdIxng7hqS9cNV2gtAGXEHmVXqR9LRVvZNZpeDpJ8V9VH0CWK12t9PZq6vpXvGHEyh4d8iFkHF/7Pd7sXb3KirIq2BgL3McND/l0KojqFCb9Ti/730Xyxb4LZzRVY+WeicaVDt8pfAGu+JmxUsLeYipX7VTXepkYdLnNa8O7tsK5cE8TdpbZ5HgvdSRGUDG78BVjje3O/d8V1j5h/YSD+nYg/XI+aAcOX2S1SzOjO74i3Oe/ZZ8kFNM14cjxyVlwu174gudVDLXvkpYKgex2TctZ3Z3GNuWURpPRjPHWRVErrx2jiHNxS69WWhwwQeeN1Pst1oq+3xtqGskcW6XDnkKxWXiSltEwlp7xNSPGcAu68icHIzgY+SzKVcVR08eOE1baf52Ba/hS/Ok9ap7nKNekxRSU0zWjpn4cb8kt3pHrrJNFQ3lsNQ5ha5xjcMtbnnjoMd46LSqTiapucMUUfFDHyaA0BsLQ7Tvvy8eaqHpE4ctsdncWMbNcayojifVvwZCSQCXOPcOXRCW1vay2UHBOUX/ht/wDC6NvlO+2U9dHUNNNO3LHu2wFnVVxB9oeMK6WEe4o6ZtMx46lzsuPzx+Sp3HnFrHPp7Dbpw230Een2DnU5p3P5FWHgu0vttmbJO3TUVTjM8Hm0H4W/IfqrMOGuWYdVqXJ7UGcJ9sWumem9OSiFHDrppfmrsrqJlxK5FVMOCdk1JEMFEJG6Cct2Qeuro48hrsHuWRz+DRJUhwM9nKQ9zY9yQFX6i+vpXnVy6JuC4vuM7Y2u5+KMZuijeuiyQkTHYbKSIc9FyjjjhY1jntBRKKFkg9kg+SO8ujAHGAgJsw78kaNH4Jl1Ic8lFMZwM5r64xuIdStx34Qx9ax2fcNCKXqAyvOkvJ6BBXUszAS5mMeK6zONEbcQTnC46QGPRoGe9cJSXFKOH+EaqWnqZDFI6NzTqa5pwQVqNr9LXFNoY1grW1DByE7cn6jBWP2OqbTVji7YFWVtfDNO3G4A5BZcyxSdTVlkMk4v2svVV+1FxJTyOhNsoHFv3tbh+SHf8euKOLmS0kgpaWFwLSImkuI8yVkt8l13CUtbpbyUzgwk1EnmkWjw97f9st+05Ok/2LdFSmne4k7P3XamdlLTyTv2axpPmpdUA3s/JVLie6B0oo43gsa3U/B5noFqxLcU5Pa+A5wu9994SrnVh7TtayRgb0a3S3YLO7rbJbVXvpnkuaP5b8YDh/lXP0d3VkdFV2yTH80yN+YGf0RC/wBmhr2lkjMgbtIO4KyPJsySTN7xb8UXErnDN/hoYw2Vpy773d/4RN7aa5XBvZTO7IHJcRsCe9VO42mrtbi5oMsfLLRy81GgvMtNGYQS0PxqOU+xN7kVRyuK2yRtnD1yt9qa+eeTs5RGezI3DnjkT1xz281TONOKK6qqhH2u0Lyc5Ps4HMfLP1VSp71JUzsY1z3Frm6R1J5ZWj8K+jua+1EdfeYjHDr19iecncCOg/VV7I43vkXPLLMtkALwJwZNdaeXiS7AR2yEaoGvOO3fkAE/0g/UrTQCQMpHpUlgsPo6rYIgyIydlBG1oxgl7eXyCG8I3gXux09Q54dM1oZL36h1+fNPhk5xcvxE1GNYmoL4CwjRqz05fSTZGef6IYxuVZLAwepzZ6k/ol1DqDJp170Vl1Dry0jIKqnFXCVR2RqKQHI32Wp2m1+uy4Azujlx4cjoaB880QcxoyQR0XO9Rpm+WKMlTPj24Vc7pXRTNLXtOCCn7LPUsmAgYXvccK98e8MU17ujZ7YGxN6lo5o16M+FKW3SmOsY2aV7sNLh9Fvlxj3UcqOK8u2/1Itg4SuFW1k9XIRnfCutFYBTsADSVotLwj7ppbHgEbDClM4WIPwfkuc8kmdaOOETOjaSdtKSbO4n4VpLuGN/g/JJ+zJ/D+SG+Q9RPjSW41UvxS4x3FMOnkdnVMTnxRK1cKuuFE2Qyu9rxTlTwfFTAapHH5r0Vs83wBCWf/IEkmPl2gRgcN04YXbnAUCKhpRI9j/iHJANobilip5cl4cHBFbK4y1OBuAFW6qIR1RYzllGbI59LMZnZbDj4j1PcFnlg35Nw10iJfXg18gbsB0T/DlW20skqaljw0n2GgbvPgkVtZTNqHyxxh8jjzcc48kMqqmWd2XOPl3LWsdLkTcGeIuLprlTmOJnZRgbhp3PgSgvbmQBxGNlGI1Mc35pEUvs4PTZMqXCI+eWGLHXC33WKUnEbjpce7xWsUcDa+MAYDlibpGtBc44A6q+8C8cUbI20ldUCKSMgRvfsHjuJ6ELFq8Ll749m/RZ1H2T6LJcLC+F+SzLT1wk2vhO1V9cyCspIn69skf3V7EUVzoGvjDS7GcdFHp7JDPMwgujew5BHMFc9ZGkdN4Yt2OWrgOxWR7XUtuhbMSDrDckfMq20tGIWhzsNxvkJukjZSxgyO1OPNzjugnFXFEdupXtY4B2ErbkWRjGBmPp54i9dqKS0wvzHE/tH4PMjkqHS3CqttIyppJ5IZovaDo3YPz7x4JPFNca+4S1lQ72c/XwCYjnjmo3OjdlhaRn5Ls6OG3HRwtZk35GzR+HvSkyRscd1gGSAe1h6jv0/wCFqPDl+t10t0z7fWQzOAJLA7D2jxbzXy9BkUsThzbsplLX1FHI2anmfG9hyx7XYc3yKfNpo5I0uCvDneOVvk+i5fSGzgqiNdLA6do3LWEZP1TM37SVFxHRvtlPa6mOaVpGqQt0jPkVi9VxbLfLd6lcnDHLtGjB+aYttqjoZ2VcMwcO8Fc16RY+Z/8Ahu+1Ob9horHZcjViuMdsro6qQamREPI78KjR37SdyE7Pf3yQPZG4ZcMK2UouNNlcYyUrSNuH7TfBVI8007qpskfsu/hyRlSI/wBpvgJ/Orlb507/APC+Up+Gp6mofOZxqecpP2XqRykBVCx4/qf9/Qdyn9C/v6n1zH+0d6PpOd1a3/dE8f2T7f2hPR4Rn990482u/wAL49PDNYPvBNO4erQcbI+lD6/2/gG+f0fv/JoPCtFcJLRE6OHYjZLuPDd8q3+w1oCNcFX2GmsMEVQWNcwYO6Pfai2Dm8nyWiWTKukURx4X2ygQ8G3prSJC3BQmt4LqKRzqmqqWws7z18B3rRL/AMaUVDa5paUZqHDTCJBtq7yO4LHbreay4zukqqqSYE9Tj8h08E2GObJzJ0iZfRx8RVsTJHQ0kpeXGplHL8I/yo1XWS1LsvcMdGjkEy6QHzSCcreklwjJ2ec0OGRzTLmnqnuS44ZGylEIwGHJp7NEmejlILcFdc3U3CWg2DaiQyvDB8I/MolQXwUdkrLVJb6WcVDg5k72+8hcMbtPyUd9MMbBNtj7TLXDDh+aRx5Cmaz6DuJ6qouJ4fqtUsXZukheTnswMZb5HOy2Cto/Vn9o0Y8l8oWi6XDh+vjr7bUvpqmE+y9v6YOxHgV9GcB8fDjywOlqWxx3GmIjqWM2Ds8ntHQHu6EFc7V4WnvXR1tDnUl6b7JdZdpGgtychZZxlfXyF/tEku0tHitHubQ3Wc7lZHx1NDA+GmDdUr36tj8Lep+aq0yUsiTLtW5RxtlLuodLI0ZLnc03b5XRQ1EZ+8Nh48lNdpa5z2t3dsPJMth1zNGPErtuPNo4N8EyFumnDSmwd8J1x3DegTT24cCEzAhbeRaFIp6qSHZri09/eohdh4SggEnukFR998L+9u4Py/wodQ24Uw1ifUzvacr2rGFOoKwwSB5DXY5tcMgjuVU8MZdLkaOSS7YHF4q2f94qz0U0slEx+s6ih/FDqGobBUUtP2WrZze4ola25tsRx0WHJClyqNeOXLV2RZ62qiOBIVGN5qwcZypNaAHFDXtBckUV8Bc2fQlNw9ZoWY9UHku1kdmtVJNVy0bGQwtLnOIUJ9+0j2qqFg8wqL6ROJ31FPFb4antGO95JpOxxyH9/osODDPLNRfR0c2aGODkir8TcQS3m4STkNjYThkbeTG9AEBc4k814uLiUk7L0UUkqXRwG23b7O5wlDcZSOWDzC9G/TLoPI8kyAOdFzODhKdskO55RZDzguAJXNexhCiCS1RqiMtIkaNwpa4WhwwVGrImNwxCqfFpc1utwZqccBpJxknoPFaPFY5/RDxtamy3KGrprlEWTGJpZhpdpyWk8tWCD1AKzOE9hOYnH2Hp+eR2AXucSBgEnlhVzgpxaZZjm4SUl4N44kusNJBLLI4AMBJx4LELxWy3GvfUy7PkPL8LegCO3fiWW72ukYXfFGHS46kbY+oJ+irUxzJnwWfR6b047pdmrW6r1ZbY9CCc7YT0LNIyea4xqXnot5gE/eyukZXl0BAIzJu8AJ4jBwm2t1TJcxwc9yC+SHmHU8+CebsEzB/Le7qThOE4PgmQGSGaZGOikGWO5+HijdEwxULWjfHVAGO3Rm21GunkhPMDUFm1eO4bl4LtPKpU/Imgt098uQpomu059pwVld6L352mP1Ur0buYxlTI5gJDjv1Vsdf6RpIcDkLLBcF8uzCPWJ5PiqJHE97il1jsEMzkNGMqLRNDqhmeQOo/LdOVB1OPeteNUmzLJ2Mv2XQdTA4dOabc4t6ZHUJIf2TtQOY3c/BOgDucbjcdQmpnaCx46FOZw7APiExVkaPNF9ERNkO4XCMhJLstafBdacpmA63KVhc0ld5KIh7C9hdC9yCJCPURdozI2cNwm539pS6z8Q5qU7dQpxv2Y5PICSQUT6ZnZ0kTepAJ+e6ae3Mm/IKXJ7AA6BRickqxqlQp0HoF4Arg2S0CHOi6AvBq6BlEhyJvtEpM4Okp0bbJuY/RSuCeTkB90xvm4pTTqOTyTWoBoHeF4O1nQOXU/wBkCEiM7aj15eSmUU2h7Xd/6KAHazpHwjmf7KRE8bnpyCNWqYE6dmnej6GGmppvWHaS8nYq1GhtjjnVHv4rHRf6qA6Wk4HcnftTU9dX1XKuUfbR0fZLkrVAPbkd+FhTcp9rzT1H/JmP4sNH5qM52djzC3R6ML7OBwdsdnfqkOYRkt+YPIrzm5G/1XNZaAH7j8QTEEtOkYOQ0cj1Yf8ACbqnZaARh2RnH6p4u0kPwXN6lvVR58YbyLc5Dh+ngg+gokiU4A7k4wnvUWNwOSpDCimAkNclAjkmmlLyrEAXyXie9cHclcwiASQo0wxPBy3eP1UpRqkYngd3PCWS4Ci6X+7cMVXBVloKG1SQX6me71yr0gCZpz97PtZy3AI9nB71TznPVSZPa88qO4EFFqgWdCX0SAcpYUIdSxskhKymQGeI2TMjnx82hzP0T2oJL3DSdshQCIE8oErWM2GEtmNONwPzKjZ7SdzwNicDxClMjzz3/RVJ2xx1hyMM2H4u5SI+Q6NamcBo3OEtoMmx2Z3dSrEKydEwyxB5HPK8YVJpMPj09RvhPGELnZVU2bIO4or8OW0YPLLiVHkw92eRUsjFJCB1bn81Gc0Fa10jMNaZG8jt4pQaXcwPkUjW5jsA7eKeadsoogj1cZy0lh8EzPESxwIGe8cj5qYeSblHslM1wRA+F3sBSWOUJnxu81IYSqosLJbXJ1pUYHCdbyVqYB/IXR5poFKBTAHFHrD/AC/9w/VOZJUWckzRNztrH6oSfBEES7ckd6ZcfbPTZJcTnmU2ckjc9EzYKHgR0XQcptpXclCyD2QvApDSvHYogFEpitlLKchvxPOAnc7IbcHH1gDPJoSzdIMVyLp2AHc5PUqYHY2bz/RQoSQ1TIwA1LAZjscf3ju7vKeAwU3HyTnMq1CE62vzNjvGAiTtjhB6NxbOzH4gjT2jPJYtSqkmacL4o//Z" alt="Jonathan Foley" width="56" height="56">
+    <div class="intro-text">
+      <h1>Hi, I'm Jonathan Foley</h1>
+      <p>Senior Software Engineer at Agilio Software</p>
     </div>
-</footer>
+  </div>
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
+  <div class="code-body">
+    <div class="code-line"><span class="ln">1</span><span class="kw">final class</span>&nbsp;<span class="type">JonathanFoley</span></div>
+    <div class="code-line"><span class="ln">2</span><span class="punct">{</span></div>
+    <div class="code-line"><span class="ln">3</span>&nbsp;&nbsp;&nbsp;<span class="kw">public string</span>&nbsp;<span class="prop">$stack</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="punct">=</span>&nbsp;<span class="str">'PHP, Laravel, Vue'</span><span class="punct">;</span></div>
+    <div class="code-line"><span class="ln">4</span>&nbsp;&nbsp;&nbsp;<span class="kw">public string</span>&nbsp;<span class="prop">$location</span>&nbsp;<span class="punct">=</span>&nbsp;<span class="str">'Alloa, Scotland — remote'</span><span class="punct">;</span></div>
+    <div class="code-line"><span class="ln">5</span></div>
+    <div class="code-line"><span class="ln">6</span>&nbsp;&nbsp;&nbsp;<span class="comment" id="typed-comment"></span></div>
+    <div class="code-line"><span class="ln">7</span><span class="punct">}</span><span class="cursor" aria-hidden="true"></span></div>
+  </div>
 
-<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
+  <div class="contact">
+    <button type="button" id="emailBtn" data-email="contact@jonathanfoley.co.uk">
+      <svg class="icon-default" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+      <span class="btn-label">Email</span>
+    </button>
+    <a href="https://linkedin.com/in/jonnyfoley" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 10.5v6M7.5 7.75v.01M11.5 16.5v-3.5c0-1.4 1-2.5 2.4-2.5s2.1 1 2.1 2.6v3.4"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/JonathanFoley" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 18c-4-1.2-4-4.5-4-4.5M15 21v-2.3c0-.6.2-1 .5-1.3-2.1-.2-4.3-1-4.3-4.6 0-1 .4-1.9 1-2.5-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9 9 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.6 1 1.5 1 2.5 0 3.6-2.2 4.4-4.3 4.6.3.3.5.8.5 1.4V21"/></svg>
+      GitHub
+    </a>
+  </div>
 
-<script src="assets/js/main.js"></script>
+  <div class="statusbar">
+    <div class="status-left">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span>open to a chat</span>
+    </div>
+    <div class="status-right">
+      <span>PHP</span>
+      <span id="clock">--:--</span>
+    </div>
+  </div>
+
+</div>
+
+<span id="srAnnounce" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);"></span>
+
+<script>
+  // ---------- theme toggle ----------
+  var toggleBtn = document.getElementById('themeToggle');
+  var root = document.documentElement;
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  if (prefersDark) { root.setAttribute('data-theme', 'light'); }
+
+  toggleBtn.addEventListener('click', function () {
+    var isLight = root.getAttribute('data-theme') === 'light';
+    root.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  });
+
+  // ---------- live local time (Europe/London) ----------
+  var clockEl = document.getElementById('clock');
+  function updateClock () {
+    try {
+      var now = new Date();
+      var timeStr = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).format(now);
+      var zoneParts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London',
+        timeZoneName: 'short'
+      }).formatToParts(now);
+      var zone = 'GMT';
+      for (var i = 0; i < zoneParts.length; i++) {
+        if (zoneParts[i].type === 'timeZoneName') { zone = zoneParts[i].value; }
+      }
+      clockEl.textContent = timeStr + ' ' + zone;
+    } catch (e) {
+      clockEl.textContent = '';
+    }
+  }
+  updateClock();
+  setInterval(updateClock, 15000);
+
+  // ---------- click-to-copy email ----------
+  var emailBtn = document.getElementById('emailBtn');
+  var announce = document.getElementById('srAnnounce');
+  var emailLabel = emailBtn.querySelector('.btn-label');
+  var emailIcon = emailBtn.querySelector('.icon-default');
+  var originalLabel = emailLabel.textContent;
+  var originalIcon = emailIcon.outerHTML;
+  var copyTimer = null;
+
+  emailBtn.addEventListener('click', function () {
+    var address = emailBtn.getAttribute('data-email');
+
+    function showCopied () {
+      emailBtn.classList.add('copied');
+      emailLabel.textContent = 'Copied';
+      var icon = emailBtn.querySelector('svg');
+      icon.outerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+      announce.textContent = 'Email address copied to clipboard';
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(function () {
+        emailBtn.classList.remove('copied');
+        emailLabel.textContent = originalLabel;
+        emailBtn.querySelector('svg').outerHTML = originalIcon;
+      }, 1800);
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(address).then(showCopied).catch(function () {
+        window.location.href = 'mailto:' + address;
+      });
+    } else {
+      window.location.href = 'mailto:' + address;
+    }
+  });
+
+  // ---------- typewriter comment ----------
+  var typedEl = document.getElementById('typed-comment');
+  var fullText = '// let\u2019s talk';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduceMotion) {
+    typedEl.textContent = fullText;
+  } else {
+    var idx = 0;
+    function typeChar () {
+      if (idx <= fullText.length) {
+        typedEl.textContent = fullText.slice(0, idx);
+        idx++;
+        setTimeout(typeChar, 45);
+      }
+    }
+    setTimeout(typeChar, 650);
+  }
+</script>
 
 </body>
-
 </html>
